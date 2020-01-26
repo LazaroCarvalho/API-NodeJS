@@ -1,33 +1,78 @@
-series = (app) => {
+const series = (app) => {
 
     app.get('/series', (req, res) => {
-        
-        var seriesDao = app.models.Series
 
-        seriesDao.lista()
-            .then(resultado => {
-                res.send(resultado);
+        const seriesDAO = app.models.Series;
+
+        seriesDAO.lista()
+            .then(resposta => {
+                res.status(200).send(resposta);
             })
             .catch(erro => {
-                console.log('Erro ao consultar: ' + erro);
-                res.status(500).send(erro);
+                res.status(500).send({"erro" : "Erro ao buscar registros"});
             });
 
     });
 
-    app.post('/series', (req, res) => {
-        const seriesDao = app.models.Series;
+    app.get('/series/:id', (req, res) => {
+        
+        const idSerie = req.params.id;
+        const seriesDAO = app.models.Series;
 
+        seriesDAO.listaPorId(idSerie)
+            .then(resposta => {
+                
+                if(resposta[0]) res.status(200).send(resposta)
+                else res.status(404).send({"alerta" : "A série não foi encontrada!"})
+
+            })
+            .catch(erro => res.status(500).send({"erro" : "Erro ao buscar registo"}));
+
+    });
+
+    app.post('/series', (req, res) => {
+
+        const seriesDAO = app.models.Series;
         const serie = req.body;
 
-        seriesDao.insere(serie)
-            .then(resultado => {
-                res.status(201).send(resultado)
+        seriesDAO.insere(serie)
+            .then(resposta => {
+                res.send({
+                    "id" : resposta.insertId,
+                    serie
+                });
             })
-            .catch(erro => {
-                console.log("erro ao inserir");
-                res.status(500).send(erro);
-            });
+            .catch(erro => res.status(500).send({"erro" : "Erro ao cadastrar série"}));
+
+    });
+
+    app.patch('/series', (req, res) => {
+
+        const seriesDAO = app.models.Series;
+        const serie = req.body;
+
+        seriesDAO.edita(serie)
+            .then(resposta => res.status(204).send({"Sucesso" : "Série alterada com sucesso!"}))
+            .catch(erro => res.status(500).send({"erro" : "Erro ao cadastrar série"}));
+
+    });
+
+    app.delete('/series/:id', (req, res) => {
+
+        const seriesDAO = app.models.Series;
+        const id = req.params.id;
+
+        seriesDAO.deleta(id)
+            .then(resposta => {
+            
+                if(resposta.affectedRows)
+                    res.status(204).send({"INFO" : "Registro excluido com sucesso"})
+                else
+                    res.status(202).send({"INFO" : "Registro não encontrado"})
+
+            })
+            .catch(erro => res.status(500).send({"erro" : "Erro ao excluir série"}));
+
     });
 
 }
