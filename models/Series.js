@@ -46,15 +46,8 @@ class Series {
 
             conexao.query(sql, id, (erro, retorno) => {
 
-<<<<<<< HEAD
                 if(erro) reject(erro);
                 else resolve(retorno);
-=======
-                if(erro) reject('Erro ao buscar: ' + erro);
-                else {
-                    resolve(retorno[0]);
-                }
->>>>>>> 0dd7a2bba0e89602a2e25d117789c329768b7416
 
             });
 
