@@ -46,7 +46,7 @@ class Series {
 
             conexao.query(sql, serie, (erro, retorno) => {
 
-                if(erro) reject({"Descrição" : erro});
+                if(erro) reject(erro);
                 else resolve(retorno);
 
             });
