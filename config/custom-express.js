@@ -1,15 +1,14 @@
-// Importando arquivos
 const express = require('express');
+const app = express();
 const consign = require('consign');
 const bodyParser = require('body-parser');
 
-const app = express();
-
-// Inclui alterações e dependências em app
 const customExpress = () => {
 
+    app.use(bodyParser.urlencoded());
     app.use(bodyParser.json());
 
+    // Injeção de dependências no app.
     consign()
     .include('controllers')
     .include('models')
@@ -20,3 +19,4 @@ const customExpress = () => {
 }
 
 module.exports = customExpress();
+
