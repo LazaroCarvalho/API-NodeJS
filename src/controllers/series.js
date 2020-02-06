@@ -16,10 +16,10 @@ module.exports = {
     },
 
     async insere(req, res) {
-        const serie = req.body;
+        let serie = req.body;
 
         try {
-            const resultado = await seriesDao.insere(serie);
+            const resultado = await serieDAO.insere(serie);
             const insertId = resultado.insertId;
             serie = {id : insertId, ...serie}
 
@@ -33,12 +33,13 @@ module.exports = {
     async buscaPorId(req, res) {
         try {
             const id = req.params.id;
-            const serie = await serieDAO.buscaPorId(id);
+            let serie = await serieDAO.buscaPorId(id);
+            serie = serie[0];
 
             if(!serie)
                 return res.status(404).send({"Erro" : "Série não encontrada"});
 
-            res.status(201).send(serie);
+            res.send(serie);
         } catch(erro) {
             res.status(500).send(erro);
         }
@@ -48,10 +49,10 @@ module.exports = {
     async atualiza(req, res) {
         try {
             const id = req.params.id;
-            const serie = req.body;
+            let serie = req.body;
             serie.id = id;
 
-            const retorno = await seriesDao.atualiza(serie);
+            const retorno = await serieDAO.atualiza(serie);
 
             if(!retorno.affectedRows){
                 return res.status(404).send({"erro" : "Série não encontrada"});
@@ -66,12 +67,12 @@ module.exports = {
     async delete(req, res) {
         const id = req.params.id;
 
-        const retorno = await serieDAO.delete(id);
+        const resposta = await serieDAO.delete(id);
 
-        if(!retorno.affectedRows)
-            return res.status(404).send({"erro" : "Série não encontrada"});
+        if(!resposta.affectedRows)
+            return res.status(404).send({"Erro" : "Série não encontrada"})
 
-        res.status(204).send({"Erro" : "Erro ao deletar"});
+        res.send(resposta);
     }
 
 }

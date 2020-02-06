@@ -8,7 +8,7 @@ class Usuarios {
 
     }
 
-    buscarPorEmail(email) {
+    buscaPorEmail(email) {
 
         return baseQuery("SELECT * FROM usuarios WHERE email = ?", email)
 
