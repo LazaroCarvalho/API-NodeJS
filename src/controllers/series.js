@@ -17,7 +17,7 @@ module.exports = {
 
     async insere(req, res) {
         let serie = req.body;
-
+        console.log(req.body)
         try {
             const resultado = await serieDAO.insere(serie);
             const insertId = resultado.insertId;

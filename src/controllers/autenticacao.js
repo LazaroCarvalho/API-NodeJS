@@ -41,7 +41,6 @@ module.exports = {
 
     async autentica(req, res) {
         const { email, senha } = req.body;
-
         try {
             const usuario = await usuarioDao.buscaPorEmail(email)
             if(!usuario)
