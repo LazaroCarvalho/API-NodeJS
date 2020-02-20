@@ -16,7 +16,7 @@ const auth = require('./routes/authRoutes');
 
 app.use(allowCrossDomain);
 app.use('/auth', auth);
-// app.use(authMidd);
+app.use(authMidd);
 app.use('/series', series);
 
 module.exports = app;

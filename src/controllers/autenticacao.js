@@ -42,11 +42,14 @@ module.exports = {
     async autentica(req, res) {
         const { email, senha } = req.body;
         try {
-            const usuario = await usuarioDao.buscaPorEmail(email)
+          
+            let usuario = await usuarioDao.buscaPorEmail(email)
+            usuario = usuario[0]
+            // console.log(usuario)
             if(!usuario)
-                return res.status(400).send({erro : "usuario não cadastrado"})
+                return res.status(400).send({erro : "Usuario não cadastrado"})
 
-            if(!await bcrypt.compare(senha, usuario[0].senha))
+            if(!await bcrypt.compare(senha, usuario.senha))
                 return res.status(400).send({erro : "Senha incorreta"});
 
             res.send({
@@ -55,6 +58,7 @@ module.exports = {
             });
         }catch(erro) {
             res.status(500).send(erro);
+            console.log(erro)
         }
     }
 

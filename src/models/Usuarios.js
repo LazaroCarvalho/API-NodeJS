@@ -9,7 +9,7 @@ class Usuarios {
     }
 
     buscaPorEmail(email) {
-
+        console.log('chegou o emal' + email)
         return baseQuery("SELECT * FROM usuarios WHERE email = ?", email)
 
     }

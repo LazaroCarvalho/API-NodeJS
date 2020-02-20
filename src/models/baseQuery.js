@@ -6,8 +6,12 @@ module.exports = (sql, params) => {
 
         conexao.query(sql, params || "", (erro, retorno) => {
 
-            if(erro) return reject(erro)
-            resolve(retorno);
+            if(erro){
+                return reject(erro)
+            }
+            else{
+                return resolve(retorno);
+            }
 
         })
 
