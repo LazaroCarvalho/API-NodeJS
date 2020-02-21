@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const authMidd = require('./middlewares/auth');
 
 app.use(express.json());
+
+app.use(cors());
 
 let allowCrossDomain = (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
