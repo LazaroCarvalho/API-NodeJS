@@ -1,13 +1,13 @@
 {
   "name": "seriesapi",
   "version": "1.0.0",
-  "description": "Api de séries e filmes",
+  "description": "Api de series e filmes",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx nodemon index.js"
   },
-  "author": "Lázaro Carvalho",
+  "author": "Igor Pereira",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

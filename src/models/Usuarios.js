@@ -1,19 +1,14 @@
-const baseQuery = require("./baseQuery");
+const baseQuery = require('./baseQuery');
 
-class Usuarios {
 
-    insere(usuario) {
-
-        return baseQuery("INSERT INTO usuarios SET ?", usuario)
-
+class Usuarios{
+    insere(usuario){
+        return baseQuery('insert into usuarios set ?', usuario)
     }
 
-    buscaPorEmail(email) {
-        console.log('chegou o emal' + email)
-        return baseQuery("SELECT * FROM usuarios WHERE email = ?", email)
-
-    }
-
+    buscarPorEmail(email){
+        return baseQuery('select * from usuarios where email = ?', email)
+    } 
 }
 
 module.exports = Usuarios;
